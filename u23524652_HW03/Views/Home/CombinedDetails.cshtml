@@ -1,0 +1,284 @@
+﻿@model u23524652_HW03.Models.LibraryViewModel
+@{
+    ViewBag.Title = "CombinedDetails";
+}
+
+<h3>Details</h3>
+<hr />
+
+<div class="container">
+    <div class="row mt-5">
+        <!-- Authors Section -->
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded mb-4">
+                <div class="card-header text-white" style="background-color: #758694">
+                    <h4 class="mb-0">Authors <i class="bi bi-pen"></i></h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <a href="#" class="create-link btn btn-sm text-white" style="background-color: #405D72" data-url="@Url.Action("Create", "authors")">
+                            <i class="bi bi-plus-circle"></i> Add Author
+                        </a>
+                    </div>
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var author in Model.Authors.Items)
+                            {
+                                <tr>
+                                    <td>@author.name</td>
+                                    <td>@author.surname</td>
+                                    <td>
+                                        <a href="#" class="edit-link btn btn-warning" data-url="@Url.Action("Edit", "authors", new { id = author.authorId })">Edit</a>
+                                        <a href="#" class="delete-link btn btn-danger" data-url="@Url.Action("Delete", "authors", new { id = author.authorId })">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        @if (Model.Authors.TotalItems > Model.Authors.PageSize)
+                        {
+                            <nav aria-label="Author pagination">
+                                <ul class="pagination">
+                                    @for (int i = 1; i <= Math.Min(10, (int)Math.Ceiling((double)Model.Authors.TotalItems / Model.Authors.PageSize)); i++)
+                                    {
+                                        <li class="page-item @(i == Model.Authors.PageNumber ? "active" : "")">
+                                            <a class="page-link" href="@Url.Action("CombinedDetails", new { authorPage = i, typePage = Model.Types.PageNumber, borrowPage = Model.Borrows.PageNumber })">@i</a>
+                                        </li>
+                                    }
+
+                                    @if (Model.Authors.PageNumber < 10 && Math.Ceiling((double)Model.Authors.TotalItems / Model.Authors.PageSize) > 10)
+                                    {
+                                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                                    }
+
+                                    @if (Model.Authors.PageNumber < (int)Math.Ceiling((double)Model.Authors.TotalItems / Model.Authors.PageSize))
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("CombinedDetails", new { authorPage = Model.Authors.PageNumber + 1, typePage = Model.Types.PageNumber, borrowPage = Model.Borrows.PageNumber })"> &gt;&gt; </a>
+                                        </li>
+                                    }
+
+                                    @if (Model.Authors.PageNumber < (int)Math.Ceiling((double)Model.Authors.TotalItems / Model.Authors.PageSize))
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("CombinedDetails", new { authorPage = (int)Math.Ceiling((double)Model.Authors.TotalItems / Model.Authors.PageSize), typePage = Model.Types.PageNumber, borrowPage = Model.Borrows.PageNumber })"> &gt;&gt;&gt;&gt; </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Types Section -->
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded mb-4">
+                <div class="card-header text-white" style="background-color: #758694">
+                    <h4 class="mb-0">Types <i class="bi bi-boombox"></i></h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <a href="#" class="create-link btn btn-sm text-white" style="background-color: #405D72" data-url="@Url.Action("Create", "types")">
+                            <i class="bi bi-plus-circle"></i> Add Type
+                        </a>
+                    </div>
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var type in Model.Types.Items)
+                            {
+                                <tr>
+                                    <td>@type.name</td>
+                                    <td>
+                                        <a href="#" class="edit-link btn btn-warning" data-url="@Url.Action("Edit", "types", new { id = type.typeId })">Edit</a>
+                                        <a href="#" class="delete-link btn btn-danger" data-url="@Url.Action("Delete", "types", new { id = type.typeId })">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        @if (Model.Types.TotalItems > Model.Types.PageSize)
+                        {
+                            <nav aria-label="Type pagination">
+                                <ul class="pagination">
+                                    @for (int i = 1; i <= Math.Min(10, (int)Math.Ceiling((double)Model.Types.TotalItems / Model.Types.PageSize)); i++)
+                                    {
+                                        <li class="page-item @(i == Model.Types.PageNumber ? "active" : "")">
+                                            <a class="page-link" href="@Url.Action("CombinedDetails", new { typePage = i, authorPage = Model.Authors.PageNumber, borrowPage = Model.Borrows.PageNumber })">@i</a>
+                                        </li>
+                                    }
+
+                                    @if (Model.Types.PageNumber < 10 && Math.Ceiling((double)Model.Types.TotalItems / Model.Types.PageSize) > 10)
+                                    {
+                                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                                    }
+
+                                    @if (Model.Types.PageNumber < (int)Math.Ceiling((double)Model.Types.TotalItems / Model.Types.PageSize))
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("CombinedDetails", new { typePage = Model.Types.PageNumber + 1, authorPage = Model.Authors.PageNumber, borrowPage = Model.Borrows.PageNumber })"> &gt;&gt; </a>
+                                        </li>
+                                    }
+
+                                    @if (Model.Types.PageNumber < (int)Math.Ceiling((double)Model.Types.TotalItems / Model.Types.PageSize))
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("CombinedDetails", new { typePage = (int)Math.Ceiling((double)Model.Types.TotalItems / Model.Types.PageSize), authorPage = Model.Authors.PageNumber, borrowPage = Model.Borrows.PageNumber })"> &gt;&gt;&gt;&gt; </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Borrows Section -->
+    <div class="card shadow-sm rounded mb-4">
+        <div class="card-header text-white" style="background-color: #758694">
+            <h4 class="mb-0">Borrows <i class="bi bi-collection"></i></h4>
+        </div>
+        <div class="card-body">
+            <p>
+                <a href="#" class="create-link btn text-white" style="background-color: #405D72" data-url="@Url.Action("Create", "borrows")"> <i class="bi bi-plus-circle"></i> Add Borrow</a>
+            </p>
+            <table class="table table-hover table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Book</th>
+                        <th>Taken Date</th>
+                        <th>Brought Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var borrow in Model.Borrows.Items)
+                    {
+                        <tr>
+                            <td>@borrow.students.name</td>
+                            <td>@borrow.students.surname</td>
+                            <td>@borrow.books.name</td>
+                            <td>@borrow.takenDate</td>
+                            <td>@borrow.broughtDate</td>
+                            <td>
+                                <a href="#" class="edit-link btn btn-warning" data-url="@Url.Action("Edit", "borrows", new { id = borrow.borrowId })">Edit</a>
+                                <a href="#" class="delete-link btn btn-danger" data-url="@Url.Action("Delete", "borrows", new { id = borrow.borrowId })">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between align-items-center">
+                @if (Model.Borrows.TotalItems > Model.Borrows.PageSize)
+                {
+                    <nav aria-label="Borrow pagination">
+                        <ul class="pagination">
+                            @for (int i = 1; i <= Math.Min(10, (int)Math.Ceiling((double)Model.Borrows.TotalItems / Model.Borrows.PageSize)); i++)
+                            {
+                                <li class="page-item @(i == Model.Borrows.PageNumber ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("CombinedDetails", new { borrowPage = i, authorPage = Model.Authors.PageNumber, typePage = Model.Types.PageNumber })">@i</a>
+                                </li>
+                            }
+
+                            @if (Model.Borrows.PageNumber < 10 && Math.Ceiling((double)Model.Borrows.TotalItems / Model.Borrows.PageSize) > 10)
+                            {
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            }
+
+                            @if (Model.Borrows.PageNumber < (int)Math.Ceiling((double)Model.Borrows.TotalItems / Model.Borrows.PageSize))
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("CombinedDetails", new { borrowPage = Model.Borrows.PageNumber + 1, authorPage = Model.Authors.PageNumber, typePage = Model.Types.PageNumber })"> &gt;&gt; </a>
+                                </li>
+                            }
+
+                            @if (Model.Borrows.PageNumber < (int)Math.Ceiling((double)Model.Borrows.TotalItems / Model.Borrows.PageSize))
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("CombinedDetails", new { borrowPage = (int)Math.Ceiling((double)Model.Borrows.TotalItems / Model.Borrows.PageSize), authorPage = Model.Authors.PageNumber, typePage = Model.Types.PageNumber })"> &gt;&gt;&gt;&gt; </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Library System </h5>
+            </div>
+            <div class="modal-body" id="modal-content">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function () {
+        $(".edit-link, .edit-link-in-modal").click(function (e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $("#modal-content").empty();
+                $("#modal-content").html(data);
+                $("#myModal").modal("show");
+            });
+        });
+
+        $("#modal-content").on("submit", "form", function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr("action");
+            var formData = form.serialize();
+
+            $.post(url, formData, function (data) {
+                $("#myModal").modal("hide");
+                location.reload();
+            });
+        });
+
+        $(".details-link, .delete-link, .create-link, .create-lookup-link").click(function (e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $("#modal-content").empty();
+                $("#modal-content").html(data);
+                $("#myModal").modal("show");
+            });
+        });
+    });
+</script>

@@ -1,0 +1,74 @@
+﻿@model u23524652_HW03.Models.books
+
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>books</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="form-label">Name</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Page Count</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.pagecount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.pagecount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Point</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.point, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.point, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Author</label>
+        <div class="col-md-10">
+            @Html.DropDownList("authorId", (SelectList)ViewBag.authorId, "Select an Author", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.authorId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Type</label>
+        <div class="col-md-10">
+            @Html.DropDownList("typeId", (SelectList)ViewBag.typeId, "Select a Type", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.typeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div class="pt-2">
+    @Html.ActionLink("Back to List", "CombinedIndex","Home", null, new { @class = "btn btn-secondary" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

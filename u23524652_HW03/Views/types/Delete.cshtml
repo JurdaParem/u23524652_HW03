@@ -1,0 +1,26 @@
+﻿@model u23524652_HW03.Models.types
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = null;
+}
+
+<h5>Are you sure you want to delete @Model.name ?</h5>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Type</dt>
+        <dd>@Html.DisplayFor(model => model.name)</dd>
+    </dl>
+
+    @using (Html.BeginForm("Delete", "types", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id", Model.typeId) 
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "CombinedDetails", "Home", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

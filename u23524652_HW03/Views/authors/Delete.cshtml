@@ -1,0 +1,35 @@
+﻿@model u23524652_HW03.Models.authors
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = null;
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete?</h3>
+<div>
+    
+    <hr />
+    <h4>Author</h4>
+    <dl class="dl-horizontal">
+        <dt>
+          Full Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "CombinedDetails", "Home", null, new {@class="btn btn-secondary"})
+        </div>
+    }
+</div>

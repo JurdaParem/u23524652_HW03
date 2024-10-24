@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a href="@Url.Action("CombinedIndex", "Home")" class="navbar-brand">
+                <i class="bi bi-book"></i> Library
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Home", "CombinedIndex", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Details", "CombinedDetails", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Report", "DurationAnalysis", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        // Function to apply Bootstrap classes based on element type
+        function applyBootstrapStyles() {
+            // Apply Bootstrap table class to all tables
+            $('table').addClass('table');
+
+            // Apply Bootstrap button styles based on action names
+            $('a:contains("CREATE")').addClass('btn btn-success btn-sm');
+            $('a:contains("EDIT")').addClass('btn btn-warning btn-sm');
+            $('a:contains("DETAIL")').addClass('btn btn-info btn-sm');
+            $('a:contains("DELETE")').addClass('btn btn-danger btn-sm');
+        }
+
+        $(document).ready(function () {
+            applyBootstrapStyles();
+        });
+    </script>
+</body>
+</html>
